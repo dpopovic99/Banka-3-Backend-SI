@@ -23,6 +23,7 @@ public class BootstrapData implements CommandLineRunner {
     private final AccountTypeRepository accountTypeRepository;
     private final CompanyRepository companyRepository;
     private final CompanyAccountRepository companyAccountRepository;
+    private final ContactRepository contactRepository;
 
     private final PasswordEncoder passwordEncoder;
     private final EmployeeRepository employeeRepository;
@@ -394,6 +395,14 @@ public class BootstrapData implements CommandLineRunner {
         companyAccountRepository.save(bankaJpy);
         companyAccountRepository.save(bankaRub);
         companyAccountRepository.save(bankaGbp);
+
+        Contact placanjeBanci = new Contact();
+        placanjeBanci.setUser(user3); //strahinja
+        placanjeBanci.setName("Strahinja Ljubicic");
+        placanjeBanci.setAccountNumber("33333333333");
+        placanjeBanci.setMyName("Milos Krasic");
+
+        contactRepository.save(placanjeBanci);
 
 
         CreditRequest creditRequest = new CreditRequest();
