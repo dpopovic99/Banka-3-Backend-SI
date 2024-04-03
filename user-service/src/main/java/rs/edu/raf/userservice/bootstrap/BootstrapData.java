@@ -374,7 +374,7 @@ public class BootstrapData implements CommandLineRunner {
 
         CompanyAccount bankaRub = new CompanyAccount();
         bankaRub.setCompany(banka);
-        bankaRub.setAccountNumber("1655555555555585");
+        bankaRub.setAccountNumber("1657777777777585");
         bankaRub.setBalance(10000000000000000.0);
         bankaRub.setAvailableBalance(10000000000000000.0);
         bankaRub.setEmployee(employee3);
