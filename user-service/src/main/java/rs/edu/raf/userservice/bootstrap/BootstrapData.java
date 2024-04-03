@@ -330,6 +330,7 @@ public class BootstrapData implements CommandLineRunner {
 
         CompanyAccount bankaRsd = new CompanyAccount();
         bankaRsd.setCompany(banka);
+        bankaRsd.setAccountNumber("1652222222222585");
         bankaRsd.setBalance(10000000000000000.0);
         bankaRsd.setAvailableBalance(10000000000000000.0);
         bankaRsd.setEmployee(employee3);
@@ -340,6 +341,7 @@ public class BootstrapData implements CommandLineRunner {
 
         CompanyAccount bankaEur = new CompanyAccount();
         bankaEur.setCompany(banka);
+        bankaEur.setAccountNumber("1653333333333585");
         bankaEur.setBalance(10000000000000000.0);
         bankaEur.setAvailableBalance(10000000000000000.0);
         bankaEur.setEmployee(employee3);
@@ -350,6 +352,7 @@ public class BootstrapData implements CommandLineRunner {
 
         CompanyAccount bankaUsd = new CompanyAccount();
         bankaUsd.setCompany(banka);
+        bankaUsd.setAccountNumber("1654444444444585");
         bankaUsd.setBalance(10000000000000000.0);
         bankaUsd.setAvailableBalance(10000000000000000.0);
         bankaUsd.setEmployee(employee3);
@@ -360,6 +363,7 @@ public class BootstrapData implements CommandLineRunner {
 
         CompanyAccount bankaJpy = new CompanyAccount();
         bankaJpy.setCompany(banka);
+        bankaJpy.setAccountNumber("1655555555555585");
         bankaJpy.setBalance(10000000000000000.0);
         bankaJpy.setAvailableBalance(10000000000000000.0);
         bankaJpy.setEmployee(employee3);
@@ -370,6 +374,7 @@ public class BootstrapData implements CommandLineRunner {
 
         CompanyAccount bankaRub = new CompanyAccount();
         bankaRub.setCompany(banka);
+        bankaRub.setAccountNumber("1655555555555585");
         bankaRub.setBalance(10000000000000000.0);
         bankaRub.setAvailableBalance(10000000000000000.0);
         bankaRub.setEmployee(employee3);
@@ -380,6 +385,7 @@ public class BootstrapData implements CommandLineRunner {
 
         CompanyAccount bankaGbp = new CompanyAccount();
         bankaGbp.setCompany(banka);
+        bankaGbp.setAccountNumber("1656666666666585");
         bankaGbp.setBalance(10000000000000000.0);
         bankaGbp.setAvailableBalance(10000000000000000.0);
         bankaGbp.setEmployee(employee3);
