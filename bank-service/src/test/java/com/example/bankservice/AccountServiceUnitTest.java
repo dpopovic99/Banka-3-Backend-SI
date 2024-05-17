@@ -20,7 +20,6 @@ import com.example.bankservice.repository.CardRepository;
 import com.example.bankservice.repository.CompanyAccountRepository;
 import com.example.bankservice.repository.UserAccountRepository;
 import com.example.bankservice.service.AccountService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;

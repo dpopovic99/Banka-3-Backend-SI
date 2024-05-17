@@ -13,10 +13,7 @@ import com.example.bankservice.domain.model.Card;
 import com.example.bankservice.domain.model.accounts.Account;
 import com.example.bankservice.domain.model.accounts.CompanyAccount;
 import com.example.bankservice.domain.model.accounts.UserAccount;
-import com.example.bankservice.repository.AccountRepository;
-import com.example.bankservice.repository.CardRepository;
-import com.example.bankservice.repository.CompanyAccountRepository;
-import com.example.bankservice.repository.UserAccountRepository;
+import com.example.bankservice.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +33,10 @@ public class AccountService {
     private static final String bankAccountCHF = "6666666666666666";
     private static final String bankAccountGBP = "7777777777777777";
     private static final String bankAccountJPY = "8888888888888888";
+    private static final String exchangeAccountRSD = "1234567891231231";
+    private static final String exchangeAccountEUR = "9876543219876543";
+    private static final String exchangeAccountUSD = "1098765432101234";
+    private static final String exchangeAccountGBP = "9988776655443322";
 
     private final AccountRepository accountRepository;
     private final UserAccountMapper userAccountMapper;
@@ -45,6 +46,7 @@ public class AccountService {
     private final CompanyAccountMapper companyAccountMapper;
     private final EmailServiceClient emailServiceClient;
     private final UserServiceClient userServiceClient;
+    private final CurrencyRepository currencyRepository;
 
     public List<UserAccountDto> findAllUserAccounts() {
         return userAccountRepository.findAll().stream().filter(Account::isActive)
@@ -85,7 +87,8 @@ public class AccountService {
         userAccount.setActive(true);
 
         createCard(userAccount);
-        return userAccountMapper.userAccountToUserAccountDto(accountRepository.save(userAccount));
+        accountRepository.save(userAccount);
+        return userAccountMapper.userAccountToUserAccountDto(userAccount);
     }
 
     public CompanyAccountDto createCompanyAccount(CompanyAccountCreateDto companyAccountCreateDto) {
@@ -125,6 +128,13 @@ public class AccountService {
         if (accountTo instanceof UserAccount) {
             sendFundsRecievedEmail(accountTo, amount);
         }
+    }
+
+    public void transferStockFunds(Account accountFrom, Account accountTo, BigDecimal amount) {
+        accountFrom.setAvailableBalance(accountFrom.getAvailableBalance().subtract(amount));
+        accountTo.setAvailableBalance(accountTo.getAvailableBalance().add(amount));
+        accountRepository.save(accountFrom);
+        accountRepository.save(accountTo);
     }
 
     public void deleteAccount(Long id) {
@@ -167,10 +177,37 @@ public class AccountService {
         }
     }
 
+    public Account findExchangeAccountForGivenCurrency(String currencyMark) {
+        switch (currencyMark) {
+            case "RSD":
+                return accountRepository.findByAccountNumber(exchangeAccountRSD)
+                        .orElseThrow(() -> new RuntimeException("Exchange account not found"));
+            case "EUR":
+                return accountRepository.findByAccountNumber(exchangeAccountEUR)
+                        .orElseThrow(() -> new RuntimeException("Exchange account not found"));
+            case "USD":
+                return accountRepository.findByAccountNumber(exchangeAccountUSD)
+                        .orElseThrow(() -> new RuntimeException("Exchange account not found"));
+            case "GBP":
+                return accountRepository.findByAccountNumber(exchangeAccountGBP)
+                        .orElseThrow(() -> new RuntimeException("Exchange account not found"));
+            default:
+                throw new RuntimeException("Exchange account not found");
+        }
+    }
+
     private void createCard(Account userAccount) {
+
+        Random random = new Random();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            int digit = random.nextInt(10); // Generates a random number from 0 to 9
+            stringBuilder.append(digit);
+        }
+        String randomNumbers = stringBuilder.toString();
         Card card = new Card();
         card.setAccountNumber(userAccount.getAccountNumber());
-        card.setCardNumber(String.valueOf(new BigInteger(53, new Random())));
+        card.setCardNumber(randomNumbers);
         card.setCardName("VISA");
         card.setCVV(String.valueOf(new Random().nextInt(999)));
         card.setCreationDate(System.currentTimeMillis());

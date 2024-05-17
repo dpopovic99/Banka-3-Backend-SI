@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rs.edu.raf.exchangeservice.domain.dto.ActuaryDto;
 import rs.edu.raf.exchangeservice.service.ActuaryService;
 
 @RestController
@@ -20,13 +21,13 @@ public class ActuaryController {
         return ResponseEntity.ok(actuaryService.findAllAgents());
     }
 
-    @PostMapping("/restartLimitUsed/{id}")
-    @Operation(description = "kada hocemo da zaposlenom restartujemo Limit, posaljemo njegov actuaryId")
+    @GetMapping("/restartLimitUsed/{id}")
+    @Operation(description = "kada hocemo da zaposlenom restartujemo Limit, posaljemo njegov employeeId")
     public ResponseEntity<?> restartLimitUsed(@PathVariable Long id){
         return ResponseEntity.ok(actuaryService.restartLimitUsed(id));
     }
 
-    @PostMapping("/setLimit/{id}")
+    @GetMapping("/setLimit/{id}")
     @Operation(description = "setovanje novog limita zaposlenom, salje se actuaryId, a novi limit je parametar")
     public ResponseEntity<?> setLimit(@PathVariable Long id, @Param("limit") Double limit){
         return ResponseEntity.ok(actuaryService.setLimit(id, limit));
@@ -44,4 +45,10 @@ public class ActuaryController {
         return ResponseEntity.badRequest().body("nije dobar boolean");
     }
 
+    @PostMapping("/addActuary")
+    @Operation(description = "kada se u User Servicu doda zaposleni sa nekom rolom koja treba Exchange servicu-u, ovu rutu ce da gadja kako bi se napravio novi aktura")
+    public ResponseEntity<?> addActuary(@RequestBody ActuaryDto actuaryDto){
+        actuaryService.addActuary(actuaryDto);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -96,6 +96,7 @@ public class EmployeeController {
         }
     }
 
+
     @GetMapping(value = "/findByUsername/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findEmployeeByUsername(@PathVariable String username) {
         try {
@@ -126,6 +127,16 @@ public class EmployeeController {
             return ResponseEntity.ok().build();
         } catch (Exception e){
             return ResponseEntity.badRequest().body("Couldn't set password for User with email: " + passwordDto.getEmail());
+        }
+    }
+
+    @GetMapping("/getExchangeEmployees")
+    @Operation(description = "dohvatamo sve zaposlene potrebne za Exchange Service")
+    public ResponseEntity<?> getExchangeEmployees(){
+        try {
+            return ResponseEntity.ok(employeeService.getExchangeEmployees());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
         }
     }
 }
